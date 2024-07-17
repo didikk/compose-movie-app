@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Movie</string>
+    <string name="home_title">What would you like to see today?</string>
+    <string name="popular">Popular</string>
+</resources>
