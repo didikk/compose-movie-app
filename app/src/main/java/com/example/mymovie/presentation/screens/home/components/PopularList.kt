@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,24 +27,62 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.mymovie.domain.model.Movie
+import com.example.mymovie.presentation.base.DataState
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun PopularList(
     onItemClick: (Int) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
+    animatedContentScope: AnimatedContentScope,
+    state: DataState<List<Movie>> = DataState.Loading
 ) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
-        contentPadding = PaddingValues(horizontal = 24.dp),
-        modifier = Modifier.padding(top = 20.dp)
-    ) {
-        itemsIndexed(listOf(1, 2, 3, 4, 5)) { index, _ ->
-            PopularItem(index, onItemClick, sharedTransitionScope, animatedContentScope)
+    when (state) {
+        is DataState.Loading -> {
+            Box(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth()
+            ) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
+        is DataState.Success -> {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(horizontal = 24.dp),
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
+                itemsIndexed(state.data) { index, movie ->
+                    PopularItem(
+                        index,
+                        movie,
+                        onItemClick,
+                        sharedTransitionScope,
+                        animatedContentScope
+                    )
+                }
+            }
+        }
+
+        is DataState.Error -> {
+            Box(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = state.error,
+                    modifier = Modifier.align(Alignment.Center),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
@@ -51,6 +91,7 @@ fun PopularList(
 @Composable
 private fun PopularItem(
     index: Int,
+    data: Movie,
     onItemClick: (Int) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope
@@ -58,7 +99,7 @@ private fun PopularItem(
     Box(modifier = Modifier.clickable { onItemClick(index) }) {
         with(sharedTransitionScope) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w400/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
+                model = data.getPosterUrl(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -66,7 +107,7 @@ private fun PopularItem(
                     .height(210.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .sharedElement(
-                        sharedTransitionScope.rememberSharedContentState(key = "image-popular-$index"),
+                        sharedTransitionScope.rememberSharedContentState(key = "image-popular-${data.id}"),
                         animatedVisibilityScope = animatedContentScope
                     )
             )

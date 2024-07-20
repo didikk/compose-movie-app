@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +21,7 @@ import com.example.mymovie.presentation.components.SearchBar
 import com.example.mymovie.presentation.screens.home.components.CategoryCollection
 import com.example.mymovie.presentation.screens.home.components.NowPlayingList
 import com.example.mymovie.presentation.screens.home.components.PopularList
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -26,8 +29,11 @@ fun HomeScreen(
     toDetail: (Int) -> Unit,
     toSearch: () -> Unit,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
+    animatedContentScope: AnimatedContentScope,
+    viewModel: HomeViewModel = koinViewModel()
 ) {
+    val popularState by viewModel.popularState.collectAsState()
+
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
             Text(
@@ -43,7 +49,12 @@ fun HomeScreen(
             }
         }
         item {
-            PopularList(onItemClick = toDetail, sharedTransitionScope, animatedContentScope)
+            PopularList(
+                onItemClick = toDetail,
+                sharedTransitionScope,
+                animatedContentScope,
+                state = popularState
+            )
         }
         CategoryCollection(modifier = Modifier.padding(top = 32.dp), title = "Upcoming")
         item {
