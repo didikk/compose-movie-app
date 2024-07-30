@@ -1,5 +1,6 @@
 package com.example.mymovie.presentation.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,22 +25,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.mymovie.domain.model.Movie
+import com.example.mymovie.presentation.utils.formatDate
+import com.example.mymovie.presentation.utils.formatRating
+import com.example.mymovie.presentation.utils.getGenreString
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun MovieItem(modifier: Modifier = Modifier) {
+fun MovieItem(
+    modifier: Modifier = Modifier,
+    movie: Movie,
+) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         AsyncImage(
-            model = "https://image.tmdb.org/t/p/w400/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
+            model = movie.getPosterUrl(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .width(95.dp)
                 .height(120.dp)
                 .clip(RoundedCornerShape(16.dp))
+
         )
         Column {
-            Text(text = "Spider-Man: No Way Home", modifier = Modifier.padding(bottom = 12.dp))
+            Text(text = movie.title, modifier = Modifier.padding(bottom = 12.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -52,7 +61,7 @@ fun MovieItem(modifier: Modifier = Modifier) {
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = "8.5",
+                    text = movie.voteAverage.formatRating(),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.tertiary
@@ -68,7 +77,7 @@ fun MovieItem(modifier: Modifier = Modifier) {
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = "Action",
+                    text = getGenreString(movie.genreIds),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                 )
@@ -83,7 +92,7 @@ fun MovieItem(modifier: Modifier = Modifier) {
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = "2021",
+                    text = movie.releaseDate.formatDate("yyyy"),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                 )

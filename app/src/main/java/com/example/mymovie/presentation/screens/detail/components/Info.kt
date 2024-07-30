@@ -23,10 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mymovie.R
+import com.example.mymovie.domain.model.detail.MovieDetail
 import com.example.mymovie.presentation.theme.LilacFields
+import com.example.mymovie.presentation.utils.formatDate
 
 @Composable
-fun Info() {
+fun Info(movieDetail: MovieDetail) {
     Row(
         modifier = Modifier
             .offset(y = -36.dp)
@@ -42,7 +44,12 @@ fun Info() {
                 .padding(end = 4.dp)
                 .size(16.dp)
         )
-        Text(text = "2021", color = LilacFields, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+        Text(
+            text = movieDetail.releaseDate.formatDate("yyyy"),
+            color = LilacFields,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp
+        )
         Spacer(
             Modifier
                 .padding(horizontal = 12.dp)
@@ -58,7 +65,12 @@ fun Info() {
                 .padding(end = 4.dp)
                 .size(16.dp)
         )
-        Text(text = "148 Minutes", color = LilacFields, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+        Text(
+            text = "${movieDetail.runtime} Minutes",
+            color = LilacFields,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp
+        )
         Spacer(
             Modifier
                 .padding(horizontal = 12.dp)
@@ -74,6 +86,11 @@ fun Info() {
                 .padding(end = 4.dp)
                 .size(16.dp)
         )
-        Text(text = "Action", color = LilacFields, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+        Text(
+            text = movieDetail.genres[0].name,
+            color = LilacFields,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp
+        )
     }
 }

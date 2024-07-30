@@ -14,14 +14,14 @@ import com.example.mymovie.presentation.components.MovieItem
 fun FavoriteScreen() {
     Column {
         Header(title = "Favorite")
-        LazyColumn(contentPadding = PaddingValues(top = 24.dp)) {
-            items(5) {
-                MovieItem(
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 24.dp)
-                )
-            }
-        }
+//        LazyColumn(contentPadding = PaddingValues(top = 24.dp)) {
+//            items(5) {
+//                MovieItem(
+//                    modifier = Modifier
+//                        .padding(horizontal = 24.dp)
+//                        .padding(bottom = 24.dp)
+//                )
+//            }
+//        }
     }
 }

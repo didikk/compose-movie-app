@@ -21,10 +21,15 @@ import com.example.mymovie.presentation.theme.MidnitghtGrey
 import com.example.mymovie.presentation.theme.TextFieldColor
 
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, enabled: Boolean = true) {
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     TextField(
-        value = "",
-        onValueChange = {},
+        value = value,
+        onValueChange = onValueChange,
         placeholder = { Text(text = "Search", fontSize = 14.sp, color = MidnitghtGrey) },
         trailingIcon = {
             Icon(

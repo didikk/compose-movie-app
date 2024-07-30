@@ -1,8 +1,5 @@
 package com.example.mymovie.presentation.screens.detail.components
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,12 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun Title(
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-    id: Int
+    poster: String,
+    title: String
 ) {
     Row(
         modifier = Modifier
@@ -38,23 +33,17 @@ fun Title(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        with(sharedTransitionScope) {
-            AsyncImage(
-                model = "https://image.tmdb.org/t/p/w400/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(95.dp)
-                    .height(120.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .sharedElement(
-                        sharedTransitionScope.rememberSharedContentState(key = "image-popular-$id"),
-                        animatedVisibilityScope = animatedContentScope
-                    )
-            )
-        }
+        AsyncImage(
+            model = poster,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .width(95.dp)
+                .height(120.dp)
+                .clip(RoundedCornerShape(16.dp))
+        )
         Text(
-            text = "Spiderman No Way Home",
+            text = title,
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
             overflow = TextOverflow.Ellipsis,

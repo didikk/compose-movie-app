@@ -1,14 +1,12 @@
 package com.example.mymovie.presentation.screens.home
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -23,16 +21,23 @@ import com.example.mymovie.presentation.screens.home.components.NowPlayingList
 import com.example.mymovie.presentation.screens.home.components.PopularList
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomeScreen(
     toDetail: (Int) -> Unit,
     toSearch: () -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val popularState by viewModel.popularState.collectAsState()
+    val nowPlayingState by viewModel.nowPlayingState.collectAsState()
+    val topRatedState by viewModel.topRatedState.collectAsState()
+    val upcomingState by viewModel.upcomingState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getPopularMovies()
+        viewModel.getNowPlayingMovies()
+        viewModel.getTopRatedMovies()
+        viewModel.getUpcomingMovies()
+    }
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
@@ -45,21 +50,37 @@ fun HomeScreen(
         }
         item {
             Surface(onClick = toSearch) {
-                SearchBar(modifier = Modifier.padding(horizontal = 24.dp), enabled = false)
+                SearchBar(
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    enabled = false,
+                    value = "",
+                    onValueChange = {})
             }
         }
         item {
             PopularList(
                 onItemClick = toDetail,
-                sharedTransitionScope,
-                animatedContentScope,
                 state = popularState
             )
         }
-        CategoryCollection(modifier = Modifier.padding(top = 32.dp), title = "Upcoming")
+        CategoryCollection(
+            modifier = Modifier.padding(top = 32.dp),
+            title = "Upcoming",
+            state = upcomingState,
+            onItemClick = toDetail
+        )
         item {
-            NowPlayingList(modifier = Modifier.padding(top = 8.dp))
+            NowPlayingList(
+                modifier = Modifier.padding(top = 8.dp),
+                state = nowPlayingState,
+                onItemClick = toDetail
+            )
         }
-        CategoryCollection(modifier = Modifier.padding(top = 24.dp), title = "Top Rated")
+        CategoryCollection(
+            modifier = Modifier.padding(top = 24.dp),
+            title = "Top Rated",
+            state = topRatedState,
+            onItemClick = toDetail
+        )
     }
 }

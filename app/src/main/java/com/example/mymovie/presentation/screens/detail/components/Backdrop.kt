@@ -24,12 +24,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.mymovie.domain.model.detail.MovieDetail
+import com.example.mymovie.presentation.utils.formatRating
 
 @Composable
-fun Backdrop() {
+fun Backdrop(movieDetail: MovieDetail) {
     Box {
         AsyncImage(
-            model = "https://image.tmdb.org/t/p/w500//stKGOm8UyhuLPR9sZLjs5AkmncA.jpg",
+            model = movieDetail.getBackdropUrl(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -54,7 +56,7 @@ fun Backdrop() {
                 modifier = Modifier.size(16.dp)
             )
             Text(
-                text = "8.5",
+                text = movieDetail.voteAverage.formatRating(),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.tertiary

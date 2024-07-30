@@ -1,15 +1,13 @@
-package com.example.mymovie.data.network.model
+package com.example.mymovie.domain.model.detail
 
 
-import com.example.mymovie.domain.model.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieResponse(
-    val dates: Dates? = null,
+data class Reviews(
     val page: Int,
-    val results: List<Movie>,
+    val results: List<Review>,
     @SerialName("total_pages")
     val totalPages: Int,
     @SerialName("total_results")

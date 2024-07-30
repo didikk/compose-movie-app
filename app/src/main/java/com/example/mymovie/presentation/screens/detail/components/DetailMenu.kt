@@ -18,13 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mymovie.presentation.theme.TextFieldColor
+import com.example.mymovie.domain.model.detail.MovieDetail
 import com.example.mymovie.presentation.utils.bottomBorder
 
 private val menuList = listOf("About", "Reviews", "Cast")
 
 @Composable
-fun DetailMenu() {
+fun DetailMenu(movieDetail: MovieDetail) {
     var selectedMenu by remember { mutableStateOf(0) }
 
     Row(
@@ -50,9 +50,9 @@ fun DetailMenu() {
     Box(modifier = Modifier.padding(24.dp)) {
         AnimatedContent(targetState = selectedMenu) { currentMenu ->
             when (currentMenu) {
-                0 -> About()
-                1 -> Review()
-                2 -> Cast()
+                0 -> AboutFragment(movieDetail.overview)
+                1 -> ReviewFragment(movieDetail.reviews.results)
+                2 -> CastFragment(movieDetail.credits.cast)
             }
         }
     }

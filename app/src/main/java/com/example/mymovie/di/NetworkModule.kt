@@ -18,8 +18,7 @@ val networkModule = module {
 }
 
 private fun createAuthInterceptor(): Interceptor {
-    val TMDB_API_KEY =
-        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNGZkYjk4YTRkZDgwZWYxOTgzMzE3YzNiZTRjMjUyNiIsIm5iZiI6MTcyMDc2NTY3OC42MzA4MzQsInN1YiI6IjY1MjcyNWQyZDM5OWU2MDBhZGRiMGRiMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eGCMR4vWTJbdY1dl9n2VvUht62lKO2Bjq3FzG8eZS5c"
+    val TMDB_API_KEY = "TMDB_API_KEY"
 
     return Interceptor { chain ->
         val original = chain.request()
