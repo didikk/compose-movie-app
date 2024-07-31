@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize") // needed only for non-primitive classes
 }
 
@@ -66,14 +67,28 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Coil for image loading
     implementation(libs.coil)
     implementation(libs.coil.compose)
+
     implementation(libs.kotlinx.coroutines.android)
+
+    // Retrofit for network calls
     implementation(libs.retrofit)
     implementation(libs.converter.kotlinx.serialization)
+
+    // Koin for dependency injection
     implementation(libs.koin.android)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.koin.androidx.compose)
+
+    // Room for database
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
