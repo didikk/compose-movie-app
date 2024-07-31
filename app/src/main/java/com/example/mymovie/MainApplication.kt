@@ -1,6 +1,7 @@
 package com.example.mymovie
 
 import android.app.Application
+import com.example.mymovie.di.appModule
 import com.example.mymovie.di.networkModule
 import com.example.mymovie.di.repositoryModule
 import com.example.mymovie.di.useCaseModule
@@ -20,7 +21,15 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(listOf(networkModule, repositoryModule, useCaseModule, viewModelModule))
+            modules(
+                listOf(
+                    appModule,
+                    networkModule,
+                    repositoryModule,
+                    useCaseModule,
+                    viewModelModule
+                )
+            )
         }
     }
 }

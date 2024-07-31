@@ -6,7 +6,7 @@ import com.example.mymovie.domain.usecase.favorite.GetFavoriteMoviesUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
-class FavoriteViewModel(private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase) :
+class FavoriteViewModel(getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase) :
     ViewModel() {
 
     val favoriteMovies = getFavoriteMoviesUseCase.execute()
