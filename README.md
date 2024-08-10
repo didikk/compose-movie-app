@@ -12,6 +12,7 @@ Compose Movie App is a modern Android application built using Jetpack Compose. I
 - **Koin**: Dependency Injection library for Android.
 - **Room**: Persistence library for local database.
 - **Coil**: Image loading library for Android.
+- **Clean Architecture**: Architectural pattern to separate concerns and improve testability.
 
 ## Screenshots
 <p>
