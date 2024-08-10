@@ -35,7 +35,7 @@ data class MovieDetail(
     val productionCountries: List<ProductionCountry>,
     @SerialName("release_date")
     val releaseDate: String,
-    val revenue: Int,
+    val revenue: Long,
     val reviews: Reviews,
     val runtime: Int,
     @SerialName("spoken_languages")

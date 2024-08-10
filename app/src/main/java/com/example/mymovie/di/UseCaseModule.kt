@@ -9,6 +9,7 @@ import com.example.mymovie.domain.usecase.SearchMovieUseCase
 import com.example.mymovie.domain.usecase.favorite.CheckIsFavoriteUseCase
 import com.example.mymovie.domain.usecase.favorite.GetFavoriteMoviesUseCase
 import com.example.mymovie.domain.usecase.favorite.ToggleFavoriteUseCase
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -20,5 +21,5 @@ val useCaseModule = module {
     factory { SearchMovieUseCase(get()) }
     factory { GetFavoriteMoviesUseCase(get()) }
     factory { CheckIsFavoriteUseCase(get()) }
-    factory { ToggleFavoriteUseCase(get()) }
+    factoryOf(::ToggleFavoriteUseCase)
 }

@@ -41,12 +41,16 @@ fun AppNavHost(
                 )
             }
             composable<Routes.Favorite> {
-                FavoriteScreen()
+                FavoriteScreen(
+                    toDetail = { id ->
+                        navController.navigate(Routes.Detail(id))
+                    }
+                )
             }
         }
         composable<Routes.Detail> { backStackEntry ->
             val detail: Routes.Detail = backStackEntry.toRoute()
-            DetailScreen(id = detail.id)
+            DetailScreen(id = detail.id, back = { navController.popBackStack() })
         }
     }
 }

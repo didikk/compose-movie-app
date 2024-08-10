@@ -2,6 +2,7 @@ package com.example.mymovie
 
 import android.app.Application
 import com.example.mymovie.di.appModule
+import com.example.mymovie.di.mapperModule
 import com.example.mymovie.di.networkModule
 import com.example.mymovie.di.repositoryModule
 import com.example.mymovie.di.useCaseModule
@@ -27,7 +28,8 @@ class MainApplication : Application() {
                     networkModule,
                     repositoryModule,
                     useCaseModule,
-                    viewModelModule
+                    viewModelModule,
+                    mapperModule
                 )
             )
         }

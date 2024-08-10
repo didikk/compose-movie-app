@@ -18,7 +18,7 @@ kotlinxSerialization = "2.0.0"
 retrofit = "2.11.0"
 room = "2.6.1"
 ui = "1.7.0-beta05"
-ksp = "1.8.21-1.0.11"
+ksp = "2.0.10-1.0.24"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
